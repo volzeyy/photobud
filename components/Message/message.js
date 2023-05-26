@@ -1,5 +1,7 @@
 import { View, StyleSheet, Text } from "react-native";
 import AnimatedView from "../AnimatedView";
+import GradientView from "../GradientView";
+import globalStyles from "../../styles";
 
 const Message = (props) => {
   const { text, role } = props;
@@ -8,13 +10,17 @@ const Message = (props) => {
     case "user":
       return (
         <AnimatedView style={styles.userMessage} animationType="speed-in-left-right" duration={200}>
-          <Text style={styles.userText}>{text}</Text>
+          <Text style={{...globalStyles.text_white, lineHeight: 28.8}}>{text}</Text>
         </AnimatedView>
       );
     case "assistant":
       return (
-        <AnimatedView style={styles.assistantMessage} animationType="slide-right" duration={200} >
-          <Text style={styles.assistantText}>{text}</Text>
+        <AnimatedView animationType="slide-right" duration={200} >
+          <GradientView
+            style={styles.assistantMessage}
+          >
+            <Text style={{...globalStyles.text_white, lineHeight: 28.8}}>{text}</Text>
+          </GradientView>
         </AnimatedView>
       );
   }
@@ -22,38 +28,22 @@ const Message = (props) => {
 
 const styles = StyleSheet.create({
   assistantMessage: {
-    padding: 10,
-    backgroundColor: "#1464FF",
-    borderWidth: 1,
+    padding: 6,
     borderRadius: 10,
     display: "flex",
     flexDirection: "row",
+    paddingLeft: 10,
     gap: 10,
   },
 
   userMessage: {
-    padding: 10,
+    padding: 6,
+    paddingLeft: 10,
     display: "flex",
     flexDirection: "row",
     gap: 10,
     backgroundColor: "#1a1a1a",
     borderRadius: 10,
-  },
-
-  userText: {
-    fontSize: 18,
-    lineHeight: 28,
-    color: "white",
-    flex: 1,
-    textAlign: "left",
-  },
-
-  assistantText: {
-    fontSize: 18,
-    lineHeight: 28,
-    color: "white",
-    flex: 1,
-    textAlign: "right",
   },
 });
 

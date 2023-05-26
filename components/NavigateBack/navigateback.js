@@ -1,6 +1,7 @@
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native"
 
 import Ionicons from "@expo/vector-icons/Ionicons"
+import globalStyles from "../../styles";
 
 const NavigateBack = (props) => {
   const { currentView, navigateTo } = props;
@@ -10,10 +11,10 @@ const NavigateBack = (props) => {
       <TouchableOpacity
         onPress={navigateTo}
       >
-        <Ionicons name='arrow-back' size={28} color='#1464FF' />
+        <Ionicons style={globalStyles.text_heading} name='arrow-back' />
       </TouchableOpacity>
       <View style={styles.currentView}>
-        <Text style={styles.title}>{currentView}</Text>
+        <Text style={globalStyles.text_heading}>{currentView}</Text>
       </View>
     </View>
   );
@@ -22,19 +23,11 @@ const NavigateBack = (props) => {
 const styles = StyleSheet.create({
   navigateBack: {
     display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    padding: 10,
-    paddingTop: 18,
-    gap: 10,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    paddingBottom: 15,
   },
-
-  title: {
-    color: "white",
-    fontSize: 20,
-    fontWeight: 500,
-  }
 });
 
 export default NavigateBack;

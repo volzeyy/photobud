@@ -1,50 +1,22 @@
-import { View, Text, StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from 'react-native'
+import globalStyles from '../../styles'
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-const Benefit = (props) => {
-  const { icon, title, description } = props;
-
+const Benefit = ({oldBenefit, newBenefit}) => {
   return (
-    <View style={styles.benefitContainer}>
-      <Ionicons style={styles.icon} name={icon} size={48} />
-      <View style={styles.infoContainer}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.description}>{description}</Text>
-      </View>
+    <View style={styles.container}>
+        <Text style={{...globalStyles.text_light, fontSize: 14, textDecorationLine: "line-through"}}>{oldBenefit}</Text>
+        <Text style={{...globalStyles.text_white, fontSize: 14}}>{newBenefit}</Text>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
-    benefitContainer: {
-        padding: 20,
+    container: {
         display: "flex",
         flexDirection: "row",
-        alignItems: "flex-start",
         gap: 10,
     },
+})
 
-    icon: {
-        color: "white",
-    },
-
-    infoContainer: {
-        flex: 1,
-        display: "flex",
-        gap: 10,
-    },
-
-    title: {
-        color: "white",
-        fontWeight: "bold",
-        fontSize: 24,
-    },
-
-    description: {
-        color: "white",
-        fontSize: 16,
-        lineHeight: 24,
-    }
-});
-
-export default Benefit;
+export default Benefit

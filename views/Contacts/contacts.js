@@ -1,4 +1,6 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native'
+import styles from './styles'
+import { View, ScrollView } from 'react-native'
+
 import NavigateBack from '../../components/NavigateBack'
 import DisplayCard from '../../components/DisplayCard/displaycard'
 
@@ -31,19 +33,5 @@ const Contacts = ({ setView }) => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "black",
-        flex: 1,
-    },
-
-    contacts: {
-        padding: 10,
-        display: "flex",
-        justifyContent: "center",
-        gap: 15,
-    }
-})
 
 export default Contacts

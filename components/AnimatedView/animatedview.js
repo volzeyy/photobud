@@ -27,6 +27,17 @@ const AnimatedView = (props) => {
           {children}
         </Animated.View>
       );
+    case "speed-in-left_fade-out":
+      return (
+        <Animated.View
+          style={{ ...style }}
+          entering={LightSpeedInLeft.duration(duration)}
+          exiting={FadeOut.duration(duration)}
+          layout={Layout.springify()}
+        >
+          {children}
+        </Animated.View>
+      )
     case "speed-in-right":
       return (
         <Animated.View
@@ -82,6 +93,16 @@ const AnimatedView = (props) => {
           {children}
         </Animated.View>
       );
+    case "custom":
+      return (
+        <Animated.View
+          style={{ ...style }}
+          entering={LightSpeedInLeft.duration(duration)}
+          layout={Layout.springify()}
+        >
+          {children}
+        </Animated.View>
+      )
   }
 };
 

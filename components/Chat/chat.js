@@ -1,15 +1,15 @@
+import globalStyles from "../../styles";
 import { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { OpenAIApi } from "openai";
 import configuration from "../../constants/openai";
 import MessageInput from "../MessageInput";
 import Message from "../Message";
-import Purchases from "react-native-purchases";
+import GradientView from "../GradientView";
 
 const Chat = (props) => {
-  const { chat, setChat, label, placeholder, setIsPremiumOpen } = props;
-
-  const [messages, setMessages] = useState([]);
+  const { chat, setChat, label, placeholder, messages, setMessages } = props;
+  
   const [input, setInput] = useState("");
   const [isDisabled, setIsDisabled] = useState(false);
 
@@ -17,14 +17,7 @@ const Chat = (props) => {
     try {
       console.log(1)
       const openai = new OpenAIApi(configuration);
-  
-      const isUserPremium = await checkPremium();
-      console.log(1)
-      if (!isUserPremium) {
-        setIsPremiumOpen(true);
-        return;
-      }
-      
+
       const content = input;
       setInput("");
       if (!content) {
@@ -55,7 +48,7 @@ const Chat = (props) => {
       completion = await openai.createChatCompletion({
         model: "gpt-4",
         messages: allMessages,
-        max_tokens: 300,
+        max_tokens: 2000,
       });
       const answer = completion.data.choices[0].message.content;
       chatMessages.push({
@@ -73,24 +66,14 @@ const Chat = (props) => {
       });
       setIsDisabled(false);
     } catch (err) {
-      console.log(JSON.stringify(err))
-    }
-  }
-
-  async function checkPremium() {
-    try {
-      const customerInfo = await Purchases.getCustomerInfo();
-      return typeof customerInfo.entitlements.active["premium"] !== "undefined";
-    } catch (err) {
-      console.log(JSON.stringify(err));
-      return undefined;
+      console.log("Error: ", err)
     }
   }
 
   return (
     <View style={styles.chat}>
       <View style={styles.chatLabel}>
-        <Text style={styles.label}>{label}</Text>
+        <Text style={{...globalStyles.text_heading, fontSize: 24}}>{label}</Text>
       </View>
       <View style={styles.messages}>
         {messages.map((message, index) => {
@@ -108,7 +91,9 @@ const Chat = (props) => {
             placeholder={placeholder}
           />
         ) : (
-          <Text style={styles.loading}>Loading...</Text>
+          <GradientView style={styles.loading}>
+            <Text style={globalStyles.text_light}>Loading...</Text>
+          </GradientView>
         )}
       </View>
     </View>
@@ -116,9 +101,10 @@ const Chat = (props) => {
 };
 
 const styles = StyleSheet.create({
-  label: {
-    color: "white",
-    fontSize: 24,
+  chat: {
+    display: "flex",
+    gap: 10,
+    paddingBottom: 15,
   },
 
   chatLabel: {
@@ -126,25 +112,19 @@ const styles = StyleSheet.create({
     gap: 5,
   },
 
-  chat: {
-    display: "flex",
-    flex: 1,
-    padding: 20,
-    paddingTop: 5,
-    gap: 20,
-  },
-
   messages: {
-    flex: 1,
-    gap: 20,
+    display: "flex",
+    gap: 15,
   },
 
   input: {
     gap: 5,
+    paddingTop: 5
   },
 
   loading: {
-    color: "white",
+    padding: 10,
+    borderRadius: 10,
   },
 });
 

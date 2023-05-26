@@ -1,29 +1,38 @@
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import globalStyles from "../../styles";
+import { View, Text, StyleSheet } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import AutoHeightImage from "react-native-auto-height-image";
+import GradientView from "../GradientView";
 
 const DisplayCard = (props) => {
-  const { text, label, icon, image } = props;
+  const { text, label, icon, isFocus } = props;
+
+  if (isFocus) {
+    return (
+      <GradientView
+        style={styles.card}
+      >
+        <View style={styles.info}>
+          <View style={styles.labelContainer}>
+            <Text style={{...globalStyles.text_light, fontSize: 12}}>{label}</Text>
+          </View>
+          <View style={styles.textContainer}>
+            <Text style={{...globalStyles.text_white, lineHeight: 28.8}}>{text || "Loading..."}</Text>
+          </View>
+        </View>
+      </GradientView>
+    );
+  }
 
   return (
     <View style={styles.card}>
-      {image && (
-        <View>
-          <AutoHeightImage
-            source={{ uri: image }}
-            width={Dimensions.get("window").width * 0.9}
-            style={styles.image}
-            onError={(err) => console.log(err)}
-          />
-        </View>
-      )}
       <View style={styles.info}>
         <View style={styles.labelContainer}>
-            <Ionicons name={icon} size={24} color='rgba(255, 255, 255, 0.5)' />
-            <Text style={styles.label}>{label}</Text>
+          <Text style={{...globalStyles.text_dark, fontSize: 12}}>{label}</Text>
+          {icon && <Ionicons style={{...globalStyles.text_dark, fontSize: 24}} name={icon} />}
         </View>
         <View style={styles.textContainer}>
-          <Text style={styles.text}>{text}</Text>
+          <Text style={{...globalStyles.text_black, lineHeight: 28.8}}>{text || "Loading..."}</Text>
         </View>
       </View>
     </View>
@@ -34,6 +43,12 @@ const styles = StyleSheet.create({
   card: {
     display: "flex",
     gap: 30,
+    borderRadius: 10,
+  },
+
+  info: {
+    gap: 5,
+    padding: 10,
   },
 
   textContainer: {
@@ -44,16 +59,8 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    gap: 3,
+    gap: 8,
   },
-
-  info: {
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
-    borderWidth: 1,
-    gap: 5,
-    borderRadius: 10,
-    padding: 10,
-  },    
 
   label: {
     color: "rgba(255, 255, 255, 0.5)",
